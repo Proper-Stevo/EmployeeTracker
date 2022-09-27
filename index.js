@@ -46,6 +46,15 @@ const init = () => {
         );
     }
     });
+
+    if (enter == 'View All Roles') {
+        db.promise()
+        .query('SELECT * FROM role')
+        .then((data) => {
+            console.log(data[0]);
+            init();
+        })
+    }
 }
 
 
