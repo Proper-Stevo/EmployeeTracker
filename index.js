@@ -3,7 +3,7 @@ const { prompt } = require('inquirer');
 const tableConsole = require('console.table')
 
 const init = () => {
-    promp([
+    prompt([
         {
             type: 'list',
             name: 'enter',
@@ -19,7 +19,7 @@ const init = () => {
             ],
         },
     ]).then(({ enter }) => {
-        if (enter == "View ALL Employees") {
+        if(enter == "View ALL Employees") {
             db.promise()
             .query('SELECT * FROM employee')
             .then((data) => {
@@ -28,7 +28,25 @@ const init = () => {
             });
         }
 
-    if (enter == 'Add Employee') {
+    if(enter == 'View All Roles') { 
+        db.promise()
+        .query('SELECT * FROM role')
+        .then((data) => {
+            console.log(data[0]);
+            init();
+        });
+    }
+
+    if(enter == 'View All Departments') {
+        db.promise()
+        .query('SELECT * FROM department')
+        .then((data) => {
+            console.table(data[0]);
+            init();
+        });
+    }
+
+    if(enter == 'Add Employee') {
         prompt ([
             {
                 type: 'input',
@@ -46,25 +64,7 @@ const init = () => {
     }
     });
 
-    if (enter == 'View All Roles') {
-        db.promise()
-        .query('SELECT * FROM role')
-        .then((data) => {
-            console.log(data[0]);
-            init();
-        });
-    }
-
-    if (enter == 'View All Departments') {
-        db.promise()
-        .query('SELECT * FROM department')
-        .then((data) => {
-            console.table(data[0]);
-            init();
-        });
-    }
-
-    if (enter == 'Add Role') {
+    if(enter == 'Add Role') {
         prompt ([
             {
             type: 'input',
@@ -93,7 +93,7 @@ const init = () => {
         );
 
     }
-    if (enter == 'Add Department') {
+    if(enter == 'Add Department') {
         prompt ([
             {
             type: 'input',
@@ -109,7 +109,7 @@ const init = () => {
         db.promise().query('INSERT INTO department SET ?', newDepartment).then(init))
     };
 
-    if (enter == 'Update Employee Role') {
+    if(enter == 'Update Employee Role') {
         prompt ([
             {
                 type: 'choices',
@@ -139,3 +139,5 @@ const init = () => {
         );
     }
 }
+
+init();
