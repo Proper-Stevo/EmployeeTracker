@@ -80,22 +80,23 @@ if (enter == 'Add Role') {
         },
 
         {
-            type: 'choices',
-            name: 'department_id',
+            type: 'list',
+            name: 'name',
             message: 'what is the department?',
             choices: [
                 'Engineering',
                 'Finance',
                 'Legal',
-                'Sales'
+                'Sales',
             ]
         }
     ]).then((newRole) =>
-        db.promise().query('INSERT INTO role SET ?', newRole).then(init)
+        { const params = [newRole.title, newRole.salary, newRole.department_id]
+        db.promise().query('INSERT INTO role(title, salary, department_id) VALUES (?, ?, 5)', params).then(init) }
     );
 
 }
-if (enter == 'Add Department') {
+if (enter == 'Add Departments') {
     prompt([
         {
             type: 'input',
@@ -108,13 +109,14 @@ if (enter == 'Add Department') {
             message: 'what is the department name?'
         },
     ]).then((newDepartment) =>
-        db.promise().query('INSERT INTO department SET ?', newDepartment).then(init))
+        db.promise().query('INSERT INTO department(name) VALUE (+1)', newDepartment).then(init)
+        );
 };
 
 if (enter == 'Update Employee Role') {
     prompt([
         {
-            type: 'choices',
+            type: 'list',
             name: 'employee',
             message: 'which employee would you like to update?',
             choices: [
@@ -125,7 +127,7 @@ if (enter == 'Update Employee Role') {
             ]
         },
         {
-            type: 'choices',
+            type: 'list',
             name: 'title',
             message: 'What role would you like to update them to?',
             choices: [
@@ -137,7 +139,8 @@ if (enter == 'Update Employee Role') {
             ]
         }
     ]).then((updateRole) =>
-        db.promse().query('UPDATE employee SET role', updateRole).then(init)
+        { const params = [updateRole.role_id]
+        db.promise().query('UPDATE employee(role_id) VALUES (5)', params).then(init) }
     );
 }
 })
