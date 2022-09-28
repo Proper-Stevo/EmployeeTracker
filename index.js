@@ -16,13 +16,12 @@ const init = () => {
                 "Add Role",
                 "Add Departments",
                 "Update Employee Role",
-                "Quit",
             ],
         },
     ]).then(({ enter }) => {
-        if (enter == "View ALL Emoployees") {
+        if (enter == "View ALL Employees") {
             db.promise()
-            .query('SELECT * FROM department')
+            .query('SELECT * FROM employee')
             .then((data) => {
                 console.table(data[0]);
                 init();
@@ -53,63 +52,90 @@ const init = () => {
         .then((data) => {
             console.log(data[0]);
             init();
-        })
+        });
+    }
+
+    if (enter == 'View All Departments') {
+        db.promise()
+        .query('SELECT * FROM department')
+        .then((data) => {
+            console.table(data[0]);
+            init();
+        });
+    }
+
+    if (enter == 'Add Role') {
+        prompt ([
+            {
+            type: 'input',
+            name: 'title',
+            message: 'What role are you creating?'
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: 'what is the salary?'
+            },
+
+            {
+                type: 'choices',
+                name: 'department_id',
+                message: 'what is the department?',
+                choices: [
+                    'Engineering',
+                    'Finance', 
+                    'Legal',
+                    'Sales'
+                ]
+            }
+        ]).then((newRole) =>
+        db.promise().query('INSERT INTO role SET ?', newRole).then(init)
+        );
+
+    }
+    if (enter == 'Add Department') {
+        prompt ([
+            {
+            type: 'input',
+            name: 'title',
+            message: 'What department are you creating?'
+            },
+            {
+                type: 'input',
+                name: 'name',
+                message: 'what is the department name?'
+            },
+        ]).then((newDepartment) =>
+        db.promise().query('INSERT INTO department SET ?', newDepartment).then(init))
+    };
+
+    if (enter == 'Update Employee Role') {
+        prompt ([
+            {
+                type: 'choices',
+                name: 'employee',
+                message: 'which employee would you like to update?',
+                choices: [
+                    'Jane',
+                    'Mad',
+                    'Stevo',
+                    'Jose',
+                ]
+            },
+            {
+                type: 'choices',
+                name: 'title',
+                message: 'What role would you like to update them to?',
+                choices: [
+                    'Sales Lead',
+                    'Engineer',
+                    'Software Engineer',
+                    'Lawyer',
+                    'Accountant'
+                ]
+            }
+        ]).then((updateRole) => 
+        db.promse().query('UPDATE employee SET role', updateRole).then(init)
+        );
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const db = mysql.createConnection(
-//     {
-//         host: 'localhost',
-//         user: 'root',
-//         password: 'password789',
-//         database: 'employee_db'
-//     },
-//     console.log('Employee Database is a GO..')
-// );
-
-//inquirer is going to navigate you 
-// const navigationArray = [ {
-//     type: "list",
-//     message: "what would you like to do?",
-//     choices: ["View ALL Employees", "Add Employee", "View All Roles", "View All Departments", "Add Role", "Add Departments", "Update Employee Role", "Quit"],
-// }]
-
-// // create array for other options such as: add empployee / add dempartment / add/update role
-// const updateArray = [ {
-//     type: "list",
-//     message: "",
-//     choices: "",
-// }]
-
-// // if allemployees ==== true 
-// //select AllEmployees()
-
-// // const db = show you what you want (all employees, all engineers, all managers etc etc)
-//  function AllEmployees() { 
-//     const sql = 'SELECT * from employee;';
-// db.query(sql, (err, results) => {
-//     if (err) {
-//         console.log(err);
-//     } return console.log(results)
-// })}
-
-// AllEmployees();
