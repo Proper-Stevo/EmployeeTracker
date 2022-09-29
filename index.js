@@ -157,8 +157,8 @@ if (enter == 'Update Employee Role') {
             ]
         }
     ]).then((updateRole) =>
-        { const params = [updateRole.role_id]
-        db.query('UPDATE employee SET role_id WHERE id = ?', params).then(init) }
+        { const params = [1 , updateRole.employee]
+        db.query('UPDATE employee SET role_id = ? WHERE first_name = ?', params).then(init) }
     );
 }
 })
