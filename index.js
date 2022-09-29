@@ -2,27 +2,26 @@ const mysql = require('mysql2');
 const { prompt } = require('inquirer');
 const tableConsole = require('console.table');
 const db = mysql.createConnection({host: 'localhost', user:'root', password:'password789', database: 'employee_db' }).promise();
-// const departmentChoices = async () => {
-//     const departmentQuery = `SELECT id AS value, name FROM department;`;
-//     const departments =  await db.query(departmentQuery)
-//     return departments[0]
-// }
+const departmentChoices = async () => {
+    const departmentQuery = `SELECT id AS value, name FROM department;`;
+    const departments =  await db.query(departmentQuery)
+    return departments[0]
+}
 
-// const start = async () => {
-//     const temp = await departmentChoices()
-//     console.log(temp)
-// }
+const start = async () => {
+    const temp = await departmentChoices()
+    console.log(temp)
+}
 const roleChoices = async () => {
-    const roleQuery = `SELECT id AS value, name FROM role;`;
+    const roleQuery = `SELECT FROM role;`;
     const roles =  await db.query(roleQuery)
     return roles[0]
 }
-console.log(roleChoices)
 
-// const start2 = async () => {
-//     const tempRoles = await roleChoices()
-//     console.log(tempRoles)
-// }
+const start2 = async () => {
+    const tempRoles = await roleChoices()
+    console.log(tempRoles)
+}
 
 // const addRole = async () => {
 //     prompt([
