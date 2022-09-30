@@ -12,17 +12,6 @@ const start = async () => {
     const temp = await departmentChoices()
     console.log(temp)
 }
-// const roleChoices = async () => {
-//     const roleQuery = `SELECT * FROM role;`;
-//     const roles =  await db.query(roleQuery)
-//     return roles[0]
-// }
-
-// const start2 = async () => {
-//     const tempRoles = await roleChoices()
-//     console.log(tempRoles)
-// }
-
 
 const addRole = async () => {
     prompt([
@@ -108,7 +97,6 @@ const init = async () => {
                 db.query('INSERT INTO employee(first_name, last_name) VALUES (? , ?)', params).then(init) }
             );
         }
-    // });
 
 if (enter == 'Add Role') {
    addRole();
